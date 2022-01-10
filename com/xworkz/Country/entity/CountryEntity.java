@@ -3,6 +3,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="Country_details")
 public class CountryEntity {
+	@Id
 	@Column(name="country_id")
 	private int id;
 	@Column(name="country_name")

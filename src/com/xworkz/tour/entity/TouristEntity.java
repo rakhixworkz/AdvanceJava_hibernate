@@ -1,9 +1,13 @@
 package com.xworkz.tour.entity;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 @Entity
 @Table(name="tourist_table")
 public class TouristEntity {
 	@Id
+	@Column(name="t_id")
 	private int tid;
 	@Column(name="t_location")
 	private String location;
@@ -15,6 +19,11 @@ public class TouristEntity {
 	private int entryFees;
 	@Column(name="t_season")
 	private String season;
+	
+	public TouristEntity() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public TouristEntity(int tid, String location, String seaLevel, String famousFor, int entryFees, String season) {
 		super();
 		this.tid = tid;

@@ -3,6 +3,16 @@ package com.xworkz.website.entity;
 import javax.persistence.*;
 @Entity
 @Table(name="website_details")
+@NamedQueries({
+	@NamedQuery(name="getByNameGoogle",query=" FROM WebsiteEntity AS web where web.name='Google'"),
+	@NamedQuery(name="getByLikeUrlx",query=" FROM WebsiteEntity AS web LIKE web.domain='Facebook.%'"),
+	@NamedQuery(name="getByMinSince",query=" SELECT max(since) AS MAXIMUMSINCE FROM WebsiteEntity"),
+	@NamedQuery(name="getByMaxSince",query=" SELECT min(since) AS MINIMUMSINCE FROM WebsiteEntity"),
+	@NamedQuery(name="getBySecondMinSince",query="Select since,max(since) from WebsiteEntity where since in(select max(since) from WebsiteEntity"),
+	@NamedQuery(name="getSecondMaxSince",query=" Select since,min(since) from WebsiteEntity where since in(select min(since) from WebsiteEntity"),
+	
+	
+})
 public class WebsiteEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

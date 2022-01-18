@@ -32,13 +32,15 @@ public class WebsiteDAOImpl implements WebsiteDAO{
 		try {
 				for (WebsiteEntity websiteEntity : entity) {
 						manager.persist(websiteEntity);
-						if(flushCount<=10) {
+						if(flushCount>=10) {
 							manager.flush();
 							flushCount=0;
 							manager.clear();
-							flushCount++;
+							System.out.println("Data is flushing");
+							
 							
 						}
+						flushCount++;
 				}tx.commit();
 						
 		}catch(PersistenceException e) {

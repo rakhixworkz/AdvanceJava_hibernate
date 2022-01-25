@@ -30,6 +30,21 @@ public class NurseryDAOImpl implements NurseryDAO{
 		}
 		transaction.commit();
 	}
+
+	@Override
+	public void save(NurseryEntity entity) {
+		EntityManager entityManager = SingletonEmf.getEntityManagerFactory().createEntityManager();
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
+		try {
+			entityManager.persist(entity);
+			tx.commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+	}
 }
 
 

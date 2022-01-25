@@ -1,58 +1,63 @@
 package com.xworkz.nursery.service;
 
-import java.util.List;
-
-import javax.naming.InvalidNameException;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceException;
-
 import com.xworkz.nursery.dao.NurseryDAO;
+import com.xworkz.nursery.dao.NurseryDAOImpl;
 import com.xworkz.nursery.entity.NurseryEntity;
-import com.xworkz.nursery.service.exception.InvalidAge;
-import com.xworkz.nursery.service.exception.InvalidEmail;
-import com.xworkz.nursery.service.exception.InvalidName;
-import com.xworkz.util.SingletonEmf;
 
-public class NurseryServiceImpl implements NurseryService{
-
+public class NurseryServiceImpl implements NurseryService{	
+	
+	//NurseryDAO dao=new NurseryDAOImpl();
+	 private NurseryDAO dao;
+	 public NurseryServiceImpl(NurseryDAO dao) {
+		this.dao=dao;
+	}
+	boolean valid = true;
 	@Override
-	public void validateAndSave(NurseryEntity entity) {
-		EntityManager manager=SingletonEmf.getEntityManagerFactory().createEntityManager();
-		EntityTransaction tx=manager.getTransaction();
-		tx.begin();
-		boolean status=true;
-		try {
-			if(entity.getChildName().length()>3 && entity.getChildName()==null) {
-				status=false;
-				throw new InvalidName("Invalid name");
-			}
-			if(entity.getChildAge()>5) {
-				status=false;
-				throw new InvalidAge("Invalid Age");
-			}
-			if(entity.getEmail().contains(null)) {
-				status=false;
-				throw new InvalidEmail("Email address not found");
-			}
+	public boolean validateAndSave(NurseryEntity entity) {
+
+		if(entity.getChildName()!=null && entity.getChildName().length()>3 && entity.getChildName().length()<20) {
 			
 		}
-		catch(InvalidName e) {
-				e.printStackTrace();
+		else {
+			System.out.println("Invalid name");
+			return false;
 		}
-		catch (InvalidAge e) {
-			e.printStackTrace();
-		
-		}catch (InvalidEmail e) {
-			e.printStackTrace();
+		if(entity.getFatherName()!=null && entity.getFatherName().length()>5) {
+			
 		}
-		finally {
-			if(manager!=null) {
-				manager.close();
-			}
+		else {
+			System.out.println("Invalid father's name");
+			return false;
 		}
+		if(entity.getEmail().contains("@") && entity.getEmail().contains(".com")) {
+			System.out.println("Email id is added successfully");
+		}
+		else {
+			System.out.println("Invalid email");
+			return false;
+		}
+		if(entity.getChildAge()!=0 && entity.getChildAge()<6) {
+			
+		}
+		else {
+			System.out.println("Invalid Age");
+			return false;
+		}
+		if(entity.getCreatedBy()!=null) {
+			
+		}
+		else {
+			System.out.println("Invalid");
+			return false;
+		}
+		if(entity.getCreatedAt()!=null) {
+			
+		}
+		else {
+			System.out.println("Invalid");
+			return false;
+		}
+		if(valid)dao.save(entity);
+		return false;
 	}
-
-	
-
 }
